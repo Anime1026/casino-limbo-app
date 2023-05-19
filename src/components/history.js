@@ -51,7 +51,11 @@ export default function SideBar({ socket, myBets }) {
   }, [socket]);
 
   return (
-    <Box sx={{ width: "100% !important", bgcolor: "transparent" }} mb={2}>
+    <Box
+      sx={{ width: "100% !important", bgcolor: "transparent" }}
+      mb={2}
+      className="historyTab"
+    >
       <Box mt={{ xs: 1, md: 3 }}>
         <Tabs
           value={value}

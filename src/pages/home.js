@@ -25,7 +25,7 @@ export default function CSSGrid() {
       <Grid item md={6} sx={{ display: { xs: "none", md: "block" } }}>
         <Sidebar socket={socket} />
       </Grid>
-      <Grid item md={12}>
+      <Grid item md={12} xs={12}>
         <BetHistory socket={socket} myBets={myBets} />
       </Grid>
     </Grid>
