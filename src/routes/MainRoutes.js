@@ -6,7 +6,7 @@ const MainRoutes = {
   element: <MainLayout />,
   children: [
     {
-      path: "/limbo",
+      path: "/",
       element: <Home />,
     },
     {
