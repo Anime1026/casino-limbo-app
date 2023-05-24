@@ -78,20 +78,19 @@ TabPanel.propTypes = {
   value: PropTypes.number.isRequired,
 };
 
-const userId = localStorage.getItem("limbo-userId");
-
 export default function GameContent({ setMyBets, myBets }) {
   const [value, setValue] = useState(0);
   const [cashOut, setCashOut] = useState(2);
   const [betAmount, setBetAmount] = useState(10);
   const [autoBet, setAutoBet] = useState(false);
+  const [disable, setDisable] = useState(false);
   const [betCount, setbetCount] = useState(0);
   const [stopProfit, setstopProfit] = useState(0);
   const [stopLose, setstopLose] = useState(0);
   const [maxBet, setmaxBet] = useState(0);
   const [onWin, setonWin] = useState(0);
   const [onLoss, setonLoss] = useState(0);
-  const { fund, setFund } = useContext(FundContext);
+  const { fund, setFund, userId } = useContext(FundContext);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -200,6 +199,7 @@ export default function GameContent({ setMyBets, myBets }) {
     if (value === 1) {
       if (betCount < 1) {
         snackbar("Bet Count is Invalid", "error");
+        return;
       } else if (AutoBet === true) {
         AutoBet = false;
         setAutoBet(false);
@@ -221,7 +221,9 @@ export default function GameContent({ setMyBets, myBets }) {
         }
       }
     } else {
-      Bet(betAmount);
+      setDisable(true);
+      await Bet(betAmount);
+      setDisable(false);
     }
   };
 
@@ -381,7 +383,11 @@ export default function GameContent({ setMyBets, myBets }) {
                 height: { xs: "50px", md: "100%" },
               }}
             >
-              <button className="button-82-pushable" onClick={onPlay}>
+              <button
+                className="button-82-pushable"
+                onClick={onPlay}
+                disabled={disable}
+              >
                 <span className="button-82-shadow"></span>
                 <span className="button-82-edge"></span>
                 <span className="button-82-front text">

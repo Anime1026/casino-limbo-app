@@ -2557,3 +2557,27 @@ td {
   font-size: 1rem !important;
   height: 1rem !important;
 }
+
+.refund {
+  height: 100%;
+  text-transform: none !important;
+  background: linear-gradient(95.31deg, #ffd102 4.92%, #ff5202) !important;
+  border-radius: 20px !important;
+  padding: 10px 30px !important;
+  color: white !important;
+  font-weight: 800;
+}
+
+.css-bdhsul-MuiTypography-root-MuiDialogTitle-root {
+  color: rgb(255, 81, 0) !important;
+  font-weight: 800 !important;
+  font-size: 25px !important;
+}
+
+.MuiDialogActions-root {
+  padding: 15px !important;
+}
+
+#modal-modal-description {
+  color: #302b2b !important;
+}
