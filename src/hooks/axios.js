@@ -7,7 +7,7 @@ const axiosServices = axios.create();
 
 axiosServices.interceptors.request.use(
   (config) => {
-    config.baseURL = process.env.REACT_APP_SERVER_URL + "/limbo";
+    config.baseURL = process.env.REACT_APP_SERVER_URL;
     const state = store.getState();
     const accessToken = state.auth.token;
     if (accessToken) {
