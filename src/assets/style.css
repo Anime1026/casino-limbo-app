@@ -71,6 +71,15 @@ header {
   bottom: 2em;
 }
 
+.btn-bet {
+  background: #ff0037 !important;
+  color: white !important;
+  font-weight: 800 !important;
+  padding: 12px 27px !important;
+  border-radius: 12px !important;
+  font-size: 1.1rem !important;
+}
+
 .btn-cashOut {
   text-transform: none !important;
   font-size: 15px !important;

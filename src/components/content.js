@@ -101,9 +101,6 @@ export default function GameContent({ setMyBets, myBets }) {
       CurFund = prev - betAmount;
       return CurFund;
     });
-    if (cashOut < 1) {
-      snackbar("Min cashout amount is 1","error");
-    }
     Axios.post("/api/game/bet-game", {
       userId,
       betAmount,
@@ -155,6 +152,8 @@ export default function GameContent({ setMyBets, myBets }) {
             $(".rocket-wrap").removeClass("flying").removeClass("boom");
             $(".rocket-boom").removeClass("boom");
 
+            setDisable(false);
+
             if (
               (stopProfit !== 0 && stopProfit <= CurFund - PrevFund) ||
               (stopLose !== 0 && stopLose <= PrevFund - CurFund)
@@ -193,7 +192,7 @@ export default function GameContent({ setMyBets, myBets }) {
               setAutobetFlag(false);
             }
           }, 400);
-        }, 200);
+        }, 400);
       })
       .catch((error) => {
         console.log(error);
@@ -238,9 +237,7 @@ export default function GameContent({ setMyBets, myBets }) {
         }
       }
     } else {
-      setDisable(true);
-      await Bet(betAmount);
-      setDisable(false);
+      Bet(betAmount);
     }
   };
 
@@ -295,8 +292,6 @@ export default function GameContent({ setMyBets, myBets }) {
           </Box>
         </Stack>
       </Stack>
-      {/* <Box className="content">
-      </Box> */}
       <Stack className="game-control" mt={5}>
         <Grid container spacing={1} gap={{ xs: "15px", md: "0" }}>
           <Grid item md={5} xs={12}>
@@ -327,7 +322,7 @@ export default function GameContent({ setMyBets, myBets }) {
                 sx={borderBottomStyles}
                 value={betAmount}
                 onChange={(e) => {
-                  Number(e.target.value)>=0
+                  Number(e.target.value)
                     ? setBetAmount(Number(e.target.value))
                     : setBetAmount(betAmount);
                 }}
@@ -373,7 +368,7 @@ export default function GameContent({ setMyBets, myBets }) {
                   sx={borderBottomStyles}
                   value={cashOut}
                   onChange={(e) => {
-                    Number(e.target.value)>=0 && Number(e.target.value) <= 1000
+                    Number(e.target.value) && Number(e.target.value) <= 1000
                       ? setCashOut(Number(e.target.value))
                       : setCashOut(cashOut);
                   }}
@@ -395,25 +390,24 @@ export default function GameContent({ setMyBets, myBets }) {
             </Stack>
           </Grid>
           <Grid item md={3.5} xs={12} sx={{ position: "relative" }}>
-            <Stack
-              className="game-control-stack-btn"
+            <Button
               sx={{
-                width: { xs: "98%", md: "95%" },
-                height: { xs: "50px", md: "100%" },
+                width: "100% !important",
+                height: "115%",
+                position: "relative",
               }}
+              variant="contained"
+              className="btn-bet"
+              onClick={() => {
+                if (!disable) {
+                  setDisable(true);
+                  onPlay();
+                }
+              }}
+              disabled={disable}
             >
-              <button
-                className="button-82-pushable"
-                onClick={onPlay}
-                disabled={disable}
-              >
-                <span className="button-82-shadow"></span>
-                <span className="button-82-edge"></span>
-                <span className="button-82-front text">
-                  {value === 0 ? "Bet" : autoBet ? "Stop" : "Start"}
-                </span>
-              </button>
-            </Stack>
+              {value === 0 ? "Bet" : autoBet ? "Stop" : "Start"}
+            </Button>
           </Grid>
         </Grid>
       </Stack>
