@@ -40,7 +40,7 @@ const Header = () => {
     dialoghandleClose();
     toast.success("Refun Successed!");
     axios
-      .post(`${process.env.REACT_APP_SERVER_URL}/limbo/api/game/save-game`, {
+      .post(`${process.env.REACT_APP_SERVER_URL}/api/game/save-game`, {
         fund,
         userId,
       })

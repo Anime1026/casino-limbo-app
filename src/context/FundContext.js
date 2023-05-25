@@ -13,7 +13,7 @@ export const FundProvider = ({ children }) => {
 
   const getUserInfo = async () => {
     let userInfo = await axios.post(
-      `${process.env.REACT_APP_SERVER_URL}/limbo/api/game/get-userInfo`,
+      `${process.env.REACT_APP_SERVER_URL}/api/game/get-userInfo`,
       {
         token,
       }
