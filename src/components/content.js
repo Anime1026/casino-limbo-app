@@ -189,14 +189,15 @@ export default function GameContent({ setMyBets, myBets }) {
   };
 
   const onPlay = async () => {
+    if (betAmount > fund) {
+      snackbar(`Not enough fund!`, "error");
+      return;
+    }
     if (Number(betAmount) < 10 || Number(betAmount) > 1000) {
       snackbar(`Maximum bet 1000, minimum bet 10`, "error");
       return;
     } else if (cashOut < 1.1) {
       snackbar(`Min CashOut is 1.1`, "error");
-      return;
-    } else if (betAmount > CurFund) {
-      snackbar(`Not enough fund!`, "error");
       return;
     }
     if (value === 1) {
