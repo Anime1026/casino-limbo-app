@@ -101,6 +101,9 @@ export default function GameContent({ setMyBets, myBets }) {
       CurFund = prev - betAmount;
       return CurFund;
     });
+    if (cashOut < 1) {
+      snackbar("Min cashout amount is 1","error");
+    }
     Axios.post("/api/game/bet-game", {
       userId,
       betAmount,
@@ -324,7 +327,7 @@ export default function GameContent({ setMyBets, myBets }) {
                 sx={borderBottomStyles}
                 value={betAmount}
                 onChange={(e) => {
-                  Number(e.target.value)
+                  Number(e.target.value)>=0
                     ? setBetAmount(Number(e.target.value))
                     : setBetAmount(betAmount);
                 }}
@@ -370,7 +373,7 @@ export default function GameContent({ setMyBets, myBets }) {
                   sx={borderBottomStyles}
                   value={cashOut}
                   onChange={(e) => {
-                    Number(e.target.value) && Number(e.target.value) <= 1000
+                    Number(e.target.value)>=0 && Number(e.target.value) <= 1000
                       ? setCashOut(Number(e.target.value))
                       : setCashOut(cashOut);
                   }}
