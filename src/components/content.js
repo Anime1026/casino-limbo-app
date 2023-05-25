@@ -22,8 +22,8 @@ import FundContext from "../context/FundContext";
 
 let BetCount = 0;
 let AutoBet = false;
-let PrevFund = 10000;
-let CurFund = 10000;
+let PrevFund = 0;
+let CurFund = 0;
 
 let borderBottomStyles = {
   "& div": {
@@ -194,6 +194,9 @@ export default function GameContent({ setMyBets, myBets }) {
       return;
     } else if (cashOut < 1.1) {
       snackbar(`Min CashOut is 1.1`, "error");
+      return;
+    } else if (betAmount > CurFund) {
+      snackbar(`Not enough fund!`, "error");
       return;
     }
     if (value === 1) {
