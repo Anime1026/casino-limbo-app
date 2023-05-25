@@ -10,6 +10,7 @@ export const FundProvider = ({ children }) => {
   const [fund, setFund] = useState(0);
   const [userId, setUserId] = useState(0);
   const [depositFlag, setdepositFlag] = useState(false);
+  const [autobetFlag, setAutobetFlag] = useState(false);
 
   const getUserInfo = async () => {
     let userInfo = await axios.post(
@@ -31,7 +32,15 @@ export const FundProvider = ({ children }) => {
   }, []);
   return (
     <FundContext.Provider
-      value={{ fund, setFund, userId, setUserId, depositFlag }}
+      value={{
+        fund,
+        setFund,
+        userId,
+        setUserId,
+        depositFlag,
+        setAutobetFlag,
+        autobetFlag,
+      }}
     >
       {children}
     </FundContext.Provider>

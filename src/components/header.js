@@ -15,6 +15,7 @@ import {
 import FundContext from "../context/FundContext";
 import axios from "axios";
 import { toast } from "react-hot-toast";
+import snackbar from "../hooks/snackbar";
 
 const style = {
   position: "absolute",
@@ -28,8 +29,11 @@ const style = {
   borderRadius: "12px",
 };
 
+let autoFlag = false;
+
 const Header = () => {
-  const { fund, userId, setFund, depositFlag } = useContext(FundContext);
+  const { fund, userId, setFund, depositFlag, autobetFlag } =
+    useContext(FundContext);
 
   const [open, setOpen] = useState(false);
   const [dialogOpen, setdialogOpen] = useState(false);
@@ -58,6 +62,10 @@ const Header = () => {
     }
   }, [depositFlag]);
 
+  useEffect(() => {
+    autoFlag = autobetFlag;
+  }, [autobetFlag]);
+
   return (
     <Stack className="header">
       <Container>
@@ -74,7 +82,11 @@ const Header = () => {
               variant="contained"
               className="refund"
               onClick={() => {
-                setdialogOpen(true);
+                if (autoFlag) {
+                  snackbar("Please stop the autobet!", "error");
+                } else {
+                  setdialogOpen(true);
+                }
               }}
             >
               Refund

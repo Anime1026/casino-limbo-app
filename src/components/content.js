@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   Box,
   Button,
@@ -80,9 +80,9 @@ TabPanel.propTypes = {
 
 export default function GameContent({ setMyBets, myBets }) {
   const [value, setValue] = useState(0);
+  const [autoBet, setAutoBet] = useState(false);
   const [cashOut, setCashOut] = useState(2);
   const [betAmount, setBetAmount] = useState(10);
-  const [autoBet, setAutoBet] = useState(false);
   const [disable, setDisable] = useState(false);
   const [betCount, setbetCount] = useState(0);
   const [stopProfit, setstopProfit] = useState(0);
@@ -90,7 +90,7 @@ export default function GameContent({ setMyBets, myBets }) {
   const [maxBet, setmaxBet] = useState(0);
   const [onWin, setonWin] = useState(0);
   const [onLoss, setonLoss] = useState(0);
-  const { fund, setFund, userId } = useContext(FundContext);
+  const { fund, setFund, userId, setAutobetFlag } = useContext(FundContext);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -101,7 +101,7 @@ export default function GameContent({ setMyBets, myBets }) {
       CurFund = prev - betAmount;
       return CurFund;
     });
-    Axios.post("api/game/bet-game", {
+    Axios.post("/api/game/bet-game", {
       userId,
       betAmount,
       cashOut,
@@ -158,6 +158,7 @@ export default function GameContent({ setMyBets, myBets }) {
             ) {
               AutoBet = false;
               setAutoBet(false);
+              setAutobetFlag(false);
             }
 
             if (value === 1 && BetCount > 0 && AutoBet === true) {
@@ -170,7 +171,14 @@ export default function GameContent({ setMyBets, myBets }) {
                   betAmount = Number(betAmount * (1 + onLoss / 100)).toFixed(2);
                   setBetAmount(betAmount);
                 }
-                Bet(betAmount);
+                if (CurFund >= betAmount) {
+                  Bet(betAmount);
+                } else {
+                  AutoBet = false;
+                  setAutoBet(false);
+                  setAutobetFlag(false);
+                  snackbar("Not enough fund!", "error");
+                }
               }, 400);
               BetCount--;
               setbetCount(BetCount);
@@ -179,6 +187,7 @@ export default function GameContent({ setMyBets, myBets }) {
             if (BetCount === 0) {
               AutoBet = false;
               setAutoBet(false);
+              setAutobetFlag(false);
             }
           }, 400);
         }, 200);
@@ -189,15 +198,14 @@ export default function GameContent({ setMyBets, myBets }) {
   };
 
   const onPlay = async () => {
-    if (betAmount > fund) {
-      snackbar(`Not enough fund!`, "error");
-      return;
-    }
     if (Number(betAmount) < 10 || Number(betAmount) > 1000) {
       snackbar(`Maximum bet 1000, minimum bet 10`, "error");
       return;
     } else if (cashOut < 1.1) {
       snackbar(`Min CashOut is 1.1`, "error");
+      return;
+    } else if (betAmount > fund) {
+      snackbar(`Not enough fund!`, "error");
       return;
     }
     if (value === 1) {
@@ -207,10 +215,12 @@ export default function GameContent({ setMyBets, myBets }) {
       } else if (AutoBet === true) {
         AutoBet = false;
         setAutoBet(false);
+        setAutobetFlag(false);
       } else {
         if (maxBet >= 10 && maxBet <= 1000) {
           AutoBet = true;
           setAutoBet(AutoBet);
+          setAutobetFlag(true);
           BetCount = betCount - 1;
           setbetCount(BetCount);
           PrevFund = fund;
@@ -345,7 +355,7 @@ export default function GameContent({ setMyBets, myBets }) {
                 <Button
                   className="game-control-button"
                   onClick={() => {
-                    if (cashOut !== 0) {
+                    if (cashOut !== 0 && cashOut <= 1000) {
                       setCashOut(Number(cashOut) - 1);
                     }
                   }}
@@ -360,7 +370,7 @@ export default function GameContent({ setMyBets, myBets }) {
                   sx={borderBottomStyles}
                   value={cashOut}
                   onChange={(e) => {
-                    Number(e.target.value)
+                    Number(e.target.value) && Number(e.target.value) <= 1000
                       ? setCashOut(Number(e.target.value))
                       : setCashOut(cashOut);
                   }}
@@ -368,7 +378,9 @@ export default function GameContent({ setMyBets, myBets }) {
                 <Button
                   className="game-control-button"
                   onClick={() => {
-                    setCashOut(Number(cashOut) + 1);
+                    cashOut < 1000
+                      ? setCashOut(Number(cashOut) + 1)
+                      : setCashOut(cashOut);
                   }}
                 >
                   +
