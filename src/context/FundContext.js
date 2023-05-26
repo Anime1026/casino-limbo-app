@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import axios from "axios";
 
 const FundContext = createContext(null);
@@ -30,6 +30,7 @@ export const FundProvider = ({ children }) => {
   useEffect(() => {
     getUserInfo();
   }, []);
+
   return (
     <FundContext.Provider
       value={{
