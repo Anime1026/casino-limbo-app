@@ -368,8 +368,8 @@ export default function GameContent({ setMyBets, myBets }) {
                   sx={borderBottomStyles}
                   value={cashOut}
                   onChange={(e) => {
-                    Number(e.target.value)>=1.1 && Number(e.target.value) <= 1000
-                      ? setCashOut(Number(e.target.value))
+                    Number(e.target.value)>=0 && Number(e.target.value) <= 1000
+                      ? Number(e.target.value<1.1)?setCashOut(1.1): setCashOut(Number(e.target.value))
                       : setCashOut(cashOut);
                   }}
                 />
