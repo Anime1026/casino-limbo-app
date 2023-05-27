@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   Box,
   Button,
@@ -202,42 +202,40 @@ export default function GameContent({ setMyBets, myBets }) {
   const onPlay = async () => {
     if (Number(betAmount) < 10 || Number(betAmount) > 1000) {
       snackbar(`Maximum bet 1000, minimum bet 10`, "error");
-      return;
     } else if (cashOut < 1.1) {
       snackbar(`Min CashOut is 1.1`, "error");
-      return;
     } else if (betAmount > fund) {
       snackbar(`Not enough fund!`, "error");
-      return;
-    }
-    if (value === 1) {
-      if (betCount < 1) {
-        snackbar("Bet Count is Invalid", "error");
-        return;
-      } else if (AutoBet === true) {
-        AutoBet = false;
-        setAutoBet(false);
-        setAutobetFlag(false);
-      } else {
-        if (maxBet >= 10 && maxBet <= 1000) {
-          AutoBet = true;
-          setAutoBet(AutoBet);
-          setAutobetFlag(true);
-          BetCount = betCount - 1;
-          setbetCount(BetCount);
-          PrevFund = fund;
-          if (betAmount > maxBet && maxBet !== 0) {
-            setBetAmount(maxBet);
-            Bet(maxBet);
-          } else {
-            Bet(betAmount);
-          }
-        } else {
-          snackbar("Max Bet is Invalid", "error");
-        }
-      }
     } else {
-      Bet(betAmount);
+      if (value === 1) {
+        if (betCount < 1) {
+          snackbar("Bet Count is Invalid", "error");
+          return;
+        } else if (AutoBet === true) {
+          AutoBet = false;
+          setAutoBet(false);
+          setAutobetFlag(false);
+        } else {
+          if (maxBet >= 10 && maxBet <= 1000) {
+            AutoBet = true;
+            setAutoBet(AutoBet);
+            setAutobetFlag(true);
+            BetCount = betCount - 1;
+            setbetCount(BetCount);
+            PrevFund = fund;
+            if (betAmount > maxBet && maxBet !== 0) {
+              setBetAmount(maxBet);
+              Bet(maxBet);
+            } else {
+              Bet(betAmount);
+            }
+          } else {
+            snackbar("Max Bet is Invalid", "error");
+          }
+        }
+      } else {
+        Bet(betAmount);
+      }
     }
   };
 
@@ -322,7 +320,7 @@ export default function GameContent({ setMyBets, myBets }) {
                 sx={borderBottomStyles}
                 value={betAmount}
                 onChange={(e) => {
-                  Number(e.target.value)
+                  Number(e.target.value) >=0 && Number(e.target.value)<=1000
                     ? setBetAmount(Number(e.target.value))
                     : setBetAmount(betAmount);
                 }}
@@ -331,7 +329,8 @@ export default function GameContent({ setMyBets, myBets }) {
                 <Button
                   className="game-control-button"
                   onClick={() => {
-                    setBetAmount(betAmount / 2);
+                    betAmount / 2 >=1?
+                      setBetAmount(betAmount / 2) : setBetAmount(1);
                   }}
                 >
                   1/2
@@ -339,7 +338,8 @@ export default function GameContent({ setMyBets, myBets }) {
                 <Button
                   className="game-control-button"
                   onClick={() => {
-                    setBetAmount(betAmount * 2);
+                    betAmount*2<=1000?
+                    setBetAmount(betAmount * 2):setBetAmount(1000);
                   }}
                 >
                   2
