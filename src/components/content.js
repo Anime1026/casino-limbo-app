@@ -204,6 +204,7 @@ export default function GameContent({ setMyBets, myBets }) {
       snackbar(`Maximum bet 1000, minimum bet 10`, "error");
     } else if (cashOut < 1.1) {
       snackbar(`Min CashOut is 1.1`, "error");
+      setDisable(false);
     } else if (betAmount > fund) {
       snackbar(`Not enough fund!`, "error");
     } else {
@@ -369,7 +370,7 @@ export default function GameContent({ setMyBets, myBets }) {
                   value={cashOut}
                   onChange={(e) => {
                     Number(e.target.value)>=0 && Number(e.target.value) <= 1000
-                      ? Number(e.target.value<1.1)?setCashOut(1.1): setCashOut(Number(e.target.value))
+                      ? setCashOut(Number(e.target.value))
                       : setCashOut(cashOut);
                   }}
                 />
