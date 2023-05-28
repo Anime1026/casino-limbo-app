@@ -353,8 +353,8 @@ export default function GameContent({ setMyBets, myBets }) {
                 <Button
                   className="game-control-button"
                   onClick={() => {
-                    if (cashOut !== 0 && cashOut <= 1000) {
-                      setCashOut(Number(cashOut) - 1);
+                    if (Number(cashOut)>=2.1 && cashOut <= 1000) {
+                      setCashOut((Number(cashOut) - 1).toFixed(2));
                     }
                   }}
                 >
@@ -377,7 +377,7 @@ export default function GameContent({ setMyBets, myBets }) {
                   className="game-control-button"
                   onClick={() => {
                     cashOut < 1000
-                      ? setCashOut(Number(cashOut) + 1)
+                      ? setCashOut((Number(cashOut) + 1).toFixed(2))
                       : setCashOut(cashOut);
                   }}
                 >
