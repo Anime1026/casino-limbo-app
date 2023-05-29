@@ -95,7 +95,7 @@ const Header = () => {
           <Stack direction="column" textAlign="end" className="userInfo">
             <Typography className="text-color">ID: {userId}</Typography>
             <Typography>
-              {fund} <span className="text-color">₹</span>
+              {fund/100} <span className="text-color">₹</span>
             </Typography>
           </Stack>
         </Stack>

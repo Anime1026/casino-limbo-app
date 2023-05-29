@@ -103,7 +103,7 @@ export default function GameContent({ setMyBets, myBets }) {
     });
     Axios.post("/api/game/bet-game", {
       userId,
-      betAmount,
+      betAmount: betAmount*100,
       cashOut,
     })
       .then(({ data }) => {
