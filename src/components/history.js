@@ -125,7 +125,7 @@ export default function SideBar({ socket, myBets }) {
                     />
                     <ListItemText
                       sx={{ flex: "1", textAlign: "right" }}
-                      primary={data.betAmount}
+                      primary={data.betAmount /100}
                     />
                     <ListItemText
                       sx={{ flex: "1", textAlign: "right" }}
@@ -139,7 +139,7 @@ export default function SideBar({ socket, myBets }) {
                         color: data.flag ? "#04ff04" : "gray",
                       }}
                       sx={{ flex: "1", textAlign: "right" }}
-                      primary={data.flag ? data.payout : 0}
+                      primary={data.flag ? data.payout /100 : 0}
                     />
                   </ListItem>
                   <Divider className="bet-history-divider" />
