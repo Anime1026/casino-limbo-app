@@ -98,7 +98,7 @@ export default function GameContent({ setMyBets, myBets }) {
 
   const Bet = (betAmount) => {
     setFund((prev) => {
-      CurFund = prev - betAmount;
+      CurFund = prev - betAmount*100;
       return CurFund;
     });
     Axios.post("/api/game/bet-game", {
