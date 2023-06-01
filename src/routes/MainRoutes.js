@@ -13,6 +13,10 @@ const MainRoutes = {
       path: "/dashboard",
       element: <Home />,
     },
+    {
+      path: "*",
+      element: <Home />,
+    },
   ],
 };
 

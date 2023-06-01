@@ -93,8 +93,8 @@ const Header = () => {
             </Button>
           </Stack>
           <Stack direction="column" textAlign="end" className="userInfo">
-            <Typography className="text-color">ID: {userId}</Typography>
-            <Typography>
+            <Typography component={"span"} variant={"body2"} className="text-color">ID: {userId}</Typography>
+            <Typography component={"span"} variant={"body2"}>
               {fund/100} <span className="text-color">₹</span>
             </Typography>
           </Stack>
@@ -115,7 +115,7 @@ const Header = () => {
             Not Enough Funds!
           </Typography>
           <Stack gap={2}>
-            <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+            <Typography component={"span"} variant={"body2"} id="modal-modal-description" sx={{ mt: 2 }}>
               Please deposit funds to play the game!
             </Typography>
             <Button

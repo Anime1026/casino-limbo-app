@@ -21,7 +21,7 @@ function TabPanel(props) {
     >
       {value === index && (
         <Box sx={{ pt: 3 }}>
-          <Typography>{children}</Typography>
+          <Typography component={"span"} variant={"body2"}>{children}</Typography>
         </Box>
       )}
     </div>
@@ -148,7 +148,7 @@ export default function SideBar({ socket, myBets }) {
             })
           ) : (
             <Box sx={{ textAlign: "center" }} pt={2}>
-              <Typography sx={{ fontWeight: "900", fontSize: "20px" }}>
+                <Typography component={"span"} variant={"body2"} sx={{ fontWeight: "900", fontSize: "20px" }}>
                 No History
               </Typography>
             </Box>
@@ -229,7 +229,7 @@ export default function SideBar({ socket, myBets }) {
             })
           ) : (
             <Box sx={{ textAlign: "center" }} pt={2}>
-              <Typography sx={{ fontWeight: "900", fontSize: "20px" }}>
+                <Typography component={"span"} variant={"body2"} sx={{ fontWeight: "900", fontSize: "20px" }}>
                 No History
               </Typography>
             </Box>

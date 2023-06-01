@@ -65,7 +65,7 @@ function TabPanel(props) {
     >
       {value === index && (
         <Box sx={{ pt: 3 }}>
-          <Typography>{children}</Typography>
+          <Typography component={"span"} variant={"body2"}>{children}</Typography>
         </Box>
       )}
     </div>
@@ -385,7 +385,7 @@ export default function GameContent({ setMyBets, myBets }) {
                   +
                 </Button>
               </Stack>
-              <Typography sx={{ color: "#55657e", fontWeight: "900" }}>
+              <Typography component={"span"} variant={"body2"} sx={{ color: "#55657e", fontWeight: "900" }}>
                 Cash Out
               </Typography>
             </Stack>
@@ -437,7 +437,7 @@ export default function GameContent({ setMyBets, myBets }) {
               gap={1}
               sx={{ display: "flex", flexDirection: "column" }}
             >
-              <Typography className="game-auto-option-text">
+              <Typography component={"span"} variant={"body2"}  className="game-auto-option-text">
                 Number of Bets
               </Typography>
               <TextField
@@ -461,7 +461,7 @@ export default function GameContent({ setMyBets, myBets }) {
               gap={1}
               sx={{ display: "flex", flexDirection: "column" }}
             >
-              <Typography className="game-auto-option-text">
+              <Typography component={"span"} variant={"body2"}  className="game-auto-option-text">
                 Stop on Profit
               </Typography>
               <TextField
@@ -485,7 +485,7 @@ export default function GameContent({ setMyBets, myBets }) {
               gap={1}
               sx={{ display: "flex", flexDirection: "column" }}
             >
-              <Typography className="game-auto-option-text">
+              <Typography component={"span"} variant={"body2"} className="game-auto-option-text">
                 Stop on Lose
               </Typography>
               <TextField
@@ -509,7 +509,7 @@ export default function GameContent({ setMyBets, myBets }) {
               gap={1}
               sx={{ display: "flex", flexDirection: "column" }}
             >
-              <Typography className="game-auto-option-text">Max Bet</Typography>
+              <Typography component={"span"} variant={"body2"} className="game-auto-option-text">Max Bet</Typography>
               <TextField
                 id="outlined-multiline-flexible"
                 hiddenLabel
@@ -531,7 +531,7 @@ export default function GameContent({ setMyBets, myBets }) {
               gap={1}
               sx={{ display: "flex", flexDirection: "column" }}
             >
-              <Typography className="game-auto-option-text">
+              <Typography component={"span"} variant={"body2"} className="game-auto-option-text">
                 When Win
               </Typography>
               <>
@@ -564,7 +564,7 @@ export default function GameContent({ setMyBets, myBets }) {
               gap={1}
               sx={{ display: "flex", flexDirection: "column" }}
             >
-              <Typography className="game-auto-option-text">
+              <Typography component={"span"} variant={"body2"} className="game-auto-option-text">
                 When Lose
               </Typography>
               <TextField
