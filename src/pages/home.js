@@ -18,27 +18,13 @@ export default function CSSGrid() {
     setSocket(socketConnection);
   };
 
-  const SaveSocketId = async (userId, socketId) => {
-    axios
-      .post(`${process.env.REACT_APP_SERVER_URL}/api/game/save-socketId`, {
-        userId,
-        socketId,
-      })
-      .then((result) => {
-        console.log(result, "result");
-      })
-      .catch((error) => {
-        console.log(error, "error---------");
-      });
-  };
-
   useEffect(() => {
     load();
   }, []);
 
   useEffect(() => {
     if (userId !== 0 && socket) {
-      SaveSocketId(userId, socket.id);
+      socket.emit('saveSocketId',{userId});
     }
   }, [userId, socket]);
   return (
