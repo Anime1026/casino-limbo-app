@@ -97,6 +97,7 @@ export default function GameContent({ setMyBets, myBets }) {
   };
 
   const Bet = (betAmount) => {
+    alert(1);
     if (fund - betAmount * 100 >= 0) {
       setFund((prev) => {
         CurFund = prev - betAmount * 100;
@@ -199,6 +200,8 @@ export default function GameContent({ setMyBets, myBets }) {
           console.log(error);
         });
     } else {
+      alert(1);
+      setDisable(false);
       snackbar("Not enough fund!", 'error');
     }
   }
@@ -211,6 +214,7 @@ export default function GameContent({ setMyBets, myBets }) {
       snackbar(`Min CashOut is 1.1`, "error");
       setDisable(false);
     } else if (betAmount > fund) {
+      setDisable(false);
       snackbar(`Not enough fund!`, "error");
     } else {
       if (value === 1) {
