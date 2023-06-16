@@ -97,7 +97,6 @@ export default function GameContent({ setMyBets, myBets }) {
   };
 
   const Bet = (betAmount) => {
-    alert(1);
     if (fund - betAmount * 100 >= 0) {
       setFund((prev) => {
         CurFund = prev - betAmount * 100;
@@ -200,7 +199,6 @@ export default function GameContent({ setMyBets, myBets }) {
           console.log(error);
         });
     } else {
-      alert(1);
       setDisable(false);
       snackbar("Not enough fund!", 'error');
     }
