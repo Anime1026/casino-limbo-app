@@ -97,107 +97,112 @@ export default function GameContent({ setMyBets, myBets }) {
   };
 
   const Bet = (betAmount) => {
-    setFund((prev) => {
-      CurFund = prev - betAmount*100;
-      return CurFund;
-    });
-    Axios.post("/api/game/bet-game", {
-      userId,
-      betAmount: betAmount*100,
-      cashOut,
-    })
-      .then(({ data }) => {
-        if (data.flag) {
-          setFund((prev) => {
-            CurFund = prev + data.payout;
-            return CurFund;
-          });
-        }
-        setMyBets((prev) => {
-          if (prev.length > 9) {
-            prev.pop();
-          }
-          return [data, ...prev];
-        });
-        const win = data.flag;
-        // eslint-disable-next-line
-        $(".counter").each(function () {
-          const size = $(this).text().split(".")[1]
-            ? $(this).text().split(".")[1].length
-            : 0;
-          $(this)
-            .prop("Counter", 0)
-            .animate(
-              { Counter: data.multiplier },
-              {
-                duration: 600,
-                step: (func) => {
-                  $(this).text(parseFloat(func).toFixed(size));
-                },
-              }
-            );
-        });
-        $(".rocket-wrap").addClass("flying");
-        $(".rocket-payout").attr("class", "rocket-payout");
-        $(".counter").attr("class", "counter");
-        $(".rocket-wrap").addClass("flying");
-        setTimeout(() => {
-          $(".rocket-wrap, .rocket-boom").addClass("boom");
-          setTimeout(() => {
-            if (win) {
-              $(".rocket-payout, .counter").toggleClass("text-success");
-            } else {
-              $(".rocket-payout, .counter").toggleClass("text-danger");
-            }
-            $(".rocket-wrap").removeClass("flying").removeClass("boom");
-            $(".rocket-boom").removeClass("boom");
-
-            setDisable(false);
-
-            if (
-              (stopProfit !== 0 && stopProfit <= CurFund - PrevFund) ||
-              (stopLose !== 0 && stopLose <= PrevFund - CurFund)
-            ) {
-              AutoBet = false;
-              setAutoBet(false);
-              setAutobetFlag(false);
-            }
-
-            if (value === 1 && BetCount > 0 && AutoBet === true) {
-              setTimeout(() => {
-                if (data.flag && onWin !== 0) {
-                  betAmount = Number(betAmount * (1 + onWin / 100)).toFixed(2);
-                  setBetAmount(betAmount);
-                }
-                if (!data.flag && onLoss !== 0) {
-                  betAmount = Number(betAmount * (1 + onLoss / 100)).toFixed(2);
-                  setBetAmount(betAmount);
-                }
-                if (CurFund >= betAmount) {
-                  Bet(betAmount);
-                } else {
-                  AutoBet = false;
-                  setAutoBet(false);
-                  setAutobetFlag(false);
-                  snackbar("Not enough fund!", "error");
-                }
-              }, 400);
-              BetCount--;
-              setbetCount(BetCount);
-            }
-
-            if (BetCount === 0) {
-              AutoBet = false;
-              setAutoBet(false);
-              setAutobetFlag(false);
-            }
-          }, 400);
-        }, 400);
-      })
-      .catch((error) => {
-        console.log(error);
+    if (fund - betAmount * 100 >= 0) {
+      setFund((prev) => {
+        CurFund = prev - betAmount * 100;
+        return CurFund;
       });
-  };
+      Axios.post("/api/game/bet-game", {
+        userId,
+        betAmount: betAmount * 100,
+        cashOut,
+      })
+        .then(({ data }) => {
+          if (data.flag) {
+            setFund((prev) => {
+              CurFund = prev + data.payout;
+              return CurFund;
+            });
+          }
+          setMyBets((prev) => {
+            if (prev.length > 9) {
+              prev.pop();
+            }
+            return [data, ...prev];
+          });
+          const win = data.flag;
+          // eslint-disable-next-line
+          $(".counter").each(function () {
+            const size = $(this).text().split(".")[1]
+              ? $(this).text().split(".")[1].length
+              : 0;
+            $(this)
+              .prop("Counter", 0)
+              .animate(
+                { Counter: data.multiplier },
+                {
+                  duration: 600,
+                  step: (func) => {
+                    $(this).text(parseFloat(func).toFixed(size));
+                  },
+                }
+              );
+          });
+          $(".rocket-wrap").addClass("flying");
+          $(".rocket-payout").attr("class", "rocket-payout");
+          $(".counter").attr("class", "counter");
+          $(".rocket-wrap").addClass("flying");
+          setTimeout(() => {
+            $(".rocket-wrap, .rocket-boom").addClass("boom");
+            setTimeout(() => {
+              if (win) {
+                $(".rocket-payout, .counter").toggleClass("text-success");
+              } else {
+                $(".rocket-payout, .counter").toggleClass("text-danger");
+              }
+              $(".rocket-wrap").removeClass("flying").removeClass("boom");
+              $(".rocket-boom").removeClass("boom");
+
+              setDisable(false);
+
+              if (
+                (stopProfit !== 0 && stopProfit <= CurFund - PrevFund) ||
+                (stopLose !== 0 && stopLose <= PrevFund - CurFund)
+              ) {
+                AutoBet = false;
+                setAutoBet(false);
+                setAutobetFlag(false);
+              }
+
+              if (value === 1 && BetCount > 0 && AutoBet === true) {
+                setTimeout(() => {
+                  if (data.flag && onWin !== 0) {
+                    betAmount = Number(betAmount * (1 + onWin / 100)).toFixed(2);
+                    setBetAmount(betAmount);
+                  }
+                  if (!data.flag && onLoss !== 0) {
+                    betAmount = Number(betAmount * (1 + onLoss / 100)).toFixed(2);
+                    setBetAmount(betAmount);
+                  }
+                  if (CurFund >= betAmount) {
+                    Bet(betAmount);
+                  } else {
+                    AutoBet = false;
+                    setAutoBet(false);
+                    setAutobetFlag(false);
+                    snackbar("Not enough fund!", "error");
+                  }
+                }, 400);
+                BetCount--;
+                setbetCount(BetCount);
+              }
+
+              if (BetCount === 0) {
+                AutoBet = false;
+                setAutoBet(false);
+                setAutobetFlag(false);
+              }
+            }, 400);
+          }, 400);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } else {
+      snackbar("Not enough fund!", 'error');
+    }
+  }
+
 
   const onPlay = async () => {
     if (Number(betAmount) < 10 || Number(betAmount) > 1000) {
@@ -321,7 +326,7 @@ export default function GameContent({ setMyBets, myBets }) {
                 sx={borderBottomStyles}
                 value={betAmount}
                 onChange={(e) => {
-                  Number(e.target.value) >=0 && Number(e.target.value)<=1000
+                  Number(e.target.value) >= 0 && Number(e.target.value) <= 1000
                     ? setBetAmount(Number(e.target.value))
                     : setBetAmount(betAmount);
                 }}
@@ -330,7 +335,7 @@ export default function GameContent({ setMyBets, myBets }) {
                 <Button
                   className="game-control-button"
                   onClick={() => {
-                    betAmount / 2 >=1?
+                    betAmount / 2 >= 1 ?
                       setBetAmount(betAmount / 2) : setBetAmount(1);
                   }}
                 >
@@ -339,8 +344,8 @@ export default function GameContent({ setMyBets, myBets }) {
                 <Button
                   className="game-control-button"
                   onClick={() => {
-                    betAmount*2<=1000?
-                    setBetAmount(betAmount * 2):setBetAmount(1000);
+                    betAmount * 2 <= 1000 ?
+                      setBetAmount(betAmount * 2) : setBetAmount(1000);
                   }}
                 >
                   2
@@ -354,7 +359,7 @@ export default function GameContent({ setMyBets, myBets }) {
                 <Button
                   className="game-control-button"
                   onClick={() => {
-                    if (Number(cashOut)>=2.1 && cashOut <= 1000) {
+                    if (Number(cashOut) >= 2.1 && cashOut <= 1000) {
                       setCashOut((Number(cashOut) - 1).toFixed(2));
                     }
                   }}
@@ -369,7 +374,7 @@ export default function GameContent({ setMyBets, myBets }) {
                   sx={borderBottomStyles}
                   value={cashOut}
                   onChange={(e) => {
-                    Number(e.target.value)>=0 && Number(e.target.value) <= 1000
+                    Number(e.target.value) >= 0 && Number(e.target.value) <= 1000
                       ? setCashOut(Number(e.target.value))
                       : setCashOut(cashOut);
                   }}
@@ -437,7 +442,7 @@ export default function GameContent({ setMyBets, myBets }) {
               gap={1}
               sx={{ display: "flex", flexDirection: "column" }}
             >
-              <Typography component={"span"} variant={"body2"}  className="game-auto-option-text">
+              <Typography component={"span"} variant={"body2"} className="game-auto-option-text">
                 Number of Bets
               </Typography>
               <TextField
@@ -461,7 +466,7 @@ export default function GameContent({ setMyBets, myBets }) {
               gap={1}
               sx={{ display: "flex", flexDirection: "column" }}
             >
-              <Typography component={"span"} variant={"body2"}  className="game-auto-option-text">
+              <Typography component={"span"} variant={"body2"} className="game-auto-option-text">
                 Stop on Profit
               </Typography>
               <TextField
