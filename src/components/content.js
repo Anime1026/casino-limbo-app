@@ -308,7 +308,7 @@ export default function GameContent({ setMyBets, myBets }) {
                 <Button
                   className="game-control-button"
                   onClick={() => {
-                    setBetAmount(1);
+                    setBetAmount(10);
                   }}
                 >
                   min
