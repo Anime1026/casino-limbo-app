@@ -340,7 +340,7 @@ export default function GameContent({ setMyBets, myBets }) {
                   className="game-control-button"
                   onClick={() => {
                     betAmount / 2 >= 10 ?
-                      setBetAmount(betAmount / 2) : setBetAmount(1);
+                      setBetAmount(betAmount / 2) : setBetAmount(10);
                   }}
                 >
                   1/2
