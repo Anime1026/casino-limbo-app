@@ -208,7 +208,9 @@ export default function GameContent({ setMyBets, myBets }) {
   const onPlay = async () => {
     if (Number(betAmount) < 10 || Number(betAmount) > 1000) {
       snackbar(`Maximum bet 1000, minimum bet 10`, "error");
+      setDisable(false);
     } else if (cashOut < 1.1) {
+      setDisable(false);
       snackbar(`Min CashOut is 1.1`, "error");
       setDisable(false);
     } else if (betAmount > fund) {
