@@ -209,9 +209,9 @@ export default function GameContent({ setMyBets, myBets }) {
     if (Number(betAmount) < 10 || Number(betAmount) > 1000) {
       snackbar(`Maximum bet 1000, minimum bet 10`, "error");
       setDisable(false);
-    } else if (cashOut < 1.1) {
+    } else if (cashOut < 1) {
       setDisable(false);
-      snackbar(`Min CashOut is 1.1`, "error");
+      snackbar(`Min CashOut is 1`, "error");
       setDisable(false);
     } else if (betAmount > fund) {
       setDisable(false);
@@ -363,7 +363,7 @@ export default function GameContent({ setMyBets, myBets }) {
                 <Button
                   className="game-control-button"
                   onClick={() => {
-                    if (Number(cashOut) >= 2.1 && cashOut <= 1000) {
+                    if (Number(cashOut) >= 2 && cashOut <= 1000) {
                       setCashOut((Number(cashOut) - 1).toFixed(2));
                     }
                   }}
