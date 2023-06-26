@@ -329,10 +329,11 @@ export default function GameContent({ setMyBets, myBets }) {
                 className="game-control-text"
                 sx={borderBottomStyles}
                 value={betAmount}
-                onChange={(e) => {
-                  Number(e.target.value) >= 0 && Number(e.target.value) <= 1000
-                    ? setBetAmount(Number(e.target.value))
-                    : setBetAmount(betAmount);
+                onChange={(e) => setBetAmount(e.target.value)}
+                onBlur={(e) => {
+                  console.log(e.target.value);
+                  Number(e.target.value) < 10 ? setBetAmount(10): Number(e.target.value) > 1000
+                    ? setBetAmount(1000) :setBetAmount(Number(e.target.value))
                 }}
               />
               <Stack flex={1} gap={1} sx={{ display: "flex", width: "100%" }}>
@@ -377,10 +378,10 @@ export default function GameContent({ setMyBets, myBets }) {
                   className="game-control-text"
                   sx={borderBottomStyles}
                   value={cashOut}
-                  onChange={(e) => {
-                    Number(e.target.value) >= 0 && Number(e.target.value) <= 1000
-                      ? setCashOut(Number(e.target.value))
-                      : setCashOut(cashOut);
+                  onChange={(e)=>setCashOut(e.target.value)}
+                  onBlur={(e) => {
+                    Number(e.target.value) < 1 ? setCashOut(1):
+                      setCashOut(Number(e.target.value))
                   }}
                 />
                 <Button
