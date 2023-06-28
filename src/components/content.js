@@ -156,8 +156,8 @@ export default function GameContent({ setMyBets, myBets }) {
               setDisable(false);
 
               if (
-                (stopProfit !== 0 && stopProfit <= CurFund - PrevFund) ||
-                (stopLose !== 0 && stopLose <= PrevFund - CurFund)
+                (stopProfit !== 0 && stopProfit*100 <= CurFund - PrevFund) ||
+                (stopLose !== 0 && stopLose*100 <= PrevFund - CurFund)
               ) {
                 AutoBet = false;
                 setAutoBet(false);
