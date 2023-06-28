@@ -89,7 +89,7 @@ const Header = () => {
                 }
               }}
             >
-              Refund
+              Reback
             </Button>
           </Stack>
           <Stack direction="column" textAlign="end" className="userInfo">
@@ -140,7 +140,7 @@ const Header = () => {
         </DialogTitle>
         <DialogContent>
           <DialogContentText>
-            If you click the "Agree", you will refund your funds of all!
+            If you click the "Agree", you will be returned to the homepage!
           </DialogContentText>
         </DialogContent>
         <DialogActions>
